@@ -1,0 +1,34 @@
+{
+  "name": "@devnetic/cli",
+  "version": "1.0.0",
+  "description": "A tool for rapidly parse command line arguments or options",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard"
+  },
+  "keywords": [
+    "cli",
+    "command line",
+    "opts",
+    "parseopt",
+    "opt",
+    "args",
+    "console",
+    "argsparse",
+    "optparse"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/devnetic/cli.git"
+  },
+  "author": "Álvaro José Agámez Licha <alvaroagamez@outlook.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/devnetic/cli/issues"
+  },
+  "homepage": "https://github.com/devnetic/cli#readme",
+  "devDependencies": {
+    "standard": "^13.1.0"
+  }
+}
