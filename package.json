@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/devnetic/cli#readme",
   "devDependencies": {
-    "standard": "^13.1.0"
+    "standard": "^14.1.0"
   }
 }
