@@ -1,9 +1,14 @@
 const path = require('path')
 
 const { format } = require('./format')
+const { isBoolean, isFloat, isInteger } = require('./utils')
 
 const DEFAULT_COLOR = 'white'
-const messages = {}
+const messages = {
+  epilog: undefined,
+  examples: [],
+  options: []
+}
 // const PARAM_REGEX = /-{1,2}([a-z]+)[=|\s]*([a-z0-9\s"'/.]*)/
 
 /**
@@ -13,7 +18,7 @@ const messages = {}
  * @returns {object}
  */
 const epilog = (text, color = DEFAULT_COLOR) => {
-  messages['epilog'] = { text, color }
+  messages.epilog = { text, color }
 
   return cli
 }
@@ -111,39 +116,6 @@ const getValues = (params, initial) => {
 }
 
 /**
- * Check if the given value is a Boolean
- *
- * @param {*} value
- * @returns {Boolean}
- */
-const isBoolean = (value) => {
-  if (['true', 'yes', '1', 'false', 'no', '0', true, false, 1, 0].includes(value)) {
-    return true
-  }
-
-  return false
-}
-
-/**
- * Chek if the given value is a float
- * @param {*} value
- * @returns {boolean}
- */
-const isFloat = (value) => {
-  return /[-|+]?\d+\.\d+/.test(value)
-}
-
-/**
- * Chek if the given value is an integer
- *
- * @param {*} value
- * @returns {boolean}
- */
-const isInteger = (value) => {
-  return /^\d+$/.test(value)
-}
-
-/**
  * Generate an option in the usage message
  *
  * @param {Array<string>} params
@@ -152,11 +124,7 @@ const isInteger = (value) => {
  * @returns {object}
  */
 const option = (params, description, color = DEFAULT_COLOR) => {
-  if (!Array.isArray(messages['option'])) {
-    messages['option'] = []
-  }
-
-  messages['option'].push({ params, description, color })
+  messages.options.push({ params, description, color })
 
   return cli
 }
@@ -172,11 +140,7 @@ const option = (params, description, color = DEFAULT_COLOR) => {
 const example = (text, description, color = DEFAULT_COLOR) => {
   text = text.replace('$0', path.basename(process.argv[1]))
 
-  if (!Array.isArray(messages['example'])) {
-    messages['example'] = []
-  }
-
-  messages['example'].push({ text, description, color })
+  messages.examples.push({ text, description, color })
 
   return cli
 }
@@ -196,7 +160,11 @@ const show = () => {
  *
  */
 const showEpilog = () => {
-  console.log(format[messages['epilog'].color](`\n${messages['epilog'].text}`))
+  if (!messages.epilog) {
+    return
+  }
+
+  console.log(format[messages.epilog.color](`\n${messages.epilog.text}`))
 }
 
 /**
@@ -204,11 +172,11 @@ const showEpilog = () => {
  *
  */
 const showExample = () => {
-  if (messages['example'].length > 0) {
+  if (messages.examples.length > 0) {
     console.log(format.white('\nExamples:\r'))
   }
 
-  messages['example'].forEach((message) => {
+  messages.examples.forEach((message) => {
     console.log(format[message.color](`  ${message.text}  ${message.description}`))
   })
 }
@@ -218,13 +186,13 @@ const showExample = () => {
  *
  */
 const showOptions = () => {
-  if (messages['option'].length > 0) {
+  if (messages.options.length > 0) {
     console.log(format.white('\nOptions:\r'))
-  }
 
-  messages['option'].forEach((message) => {
-    console.log(format[message.color](`  ${message.params.join(', ')}  ${message.description}`))
-  })
+    messages.options.forEach((message) => {
+      console.log(format[message.color](`  ${message.params.join(', ')}  ${message.description}`))
+    })
+  }
 }
 
 /**
@@ -232,8 +200,8 @@ const showOptions = () => {
  *
  */
 const showUsage = () => {
-  return format.white('\r') +
-  format[messages['usage'].color](`\r${messages['usage'].text}`)
+  console.log(format.white('\r') +
+  format[messages.usage.color](`\r${messages.usage.text}`))
 }
 
 /**
@@ -241,10 +209,10 @@ const showUsage = () => {
  * @param {string} text
  * @param {string} color
  */
-const usage = (text, color = DEFAULT_COLOR) => {
+const usage = (text = '', color = DEFAULT_COLOR) => {
   text = text.replace('$0', path.basename(process.argv[1]))
 
-  messages['usage'] = { text, color }
+  messages.usage = { text, color }
 
   return cli
 }

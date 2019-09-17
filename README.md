@@ -1,4 +1,11 @@
 # @devnetic/cli
+
+![npm (scoped)](https://img.shields.io/npm/v/@devnetic/cli)
+![npm bundle size (scoped)](https://img.shields.io/bundlephobia/minzip/@devnetic/cli?color=red)
+![npm](https://img.shields.io/npm/dt/@devnetic/cli)
+![GitHub issues](https://img.shields.io/github/issues-raw/devnetic/cli)
+![GitHub](https://img.shields.io/github/license/devnetic/cli)
+
 A tool for rapidly parse command line arguments or options.
 
 ## Usage

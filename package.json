@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "A tool for rapidly parse command line arguments or options",
   "main": "index.js",
+  "unpkg": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "standard"
@@ -18,6 +19,9 @@
     "argsparse",
     "optparse"
   ],
+  "files": [
+    "src/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/devnetic/cli.git"
@@ -29,6 +33,7 @@
   },
   "homepage": "https://github.com/devnetic/cli#readme",
   "devDependencies": {
+    "nyc": "^14.1.1",
     "standard": "^14.1.0"
   }
 }
