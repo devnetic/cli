@@ -18,7 +18,7 @@ const isBoolean = (value) => {
  * @returns {boolean}
  */
 const isFloat = (value) => {
-  return /[-|+]?\d+\.\d+/.test(value)
+  return typeof value === 'number' && !Number.isInteger(value)
 }
 
 /**

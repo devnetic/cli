@@ -15,7 +15,9 @@ const argv = [
   '-v',
   'me hearties',
   'yo',
-  'ho'
+  'ho',
+  '-H',
+  '127.0.0.1'
 ]
 
 const fixed = getParams(argv)

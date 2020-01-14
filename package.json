@@ -1,6 +1,6 @@
 {
   "name": "@devnetic/cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool for rapidly parse command line arguments or options",
   "main": "index.js",
   "unpkg": "index.js",
@@ -33,7 +33,7 @@
   },
   "homepage": "https://github.com/devnetic/cli#readme",
   "devDependencies": {
-    "nyc": "^14.1.1",
-    "standard": "^14.1.0"
+    "nyc": "^15.0.0",
+    "standard": "^14.3.1"
   }
 }
