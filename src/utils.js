@@ -18,13 +18,16 @@ const isBoolean = (value) => {
  * @returns {boolean}
  */
 const isFloat = (value) => {
-  const parsed = parseFloat(value)
+  // const parsed = parseFloat(value)
 
-  if (Number.isNaN(parsed)) {
-    return false
-  }
+  // if (Number.isNaN(parsed)) {
+  //   return false
+  // }
 
-  return parsed.toString().length === value.length
+  // return parsed.toString().length === value.length
+  const parsed = Number(value)
+
+  return !Number.isNaN(parsed) && !Number.isInteger(parsed)
 }
 
 /**
