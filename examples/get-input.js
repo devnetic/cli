@@ -11,7 +11,7 @@ const questions = [{
 }, {
   type: 'input',
   name: 'phoneNumber',
-  message: 'What\'s your phone number? '
+  message: 'What\'s your phone number? ',
 }]
 
 const run = async () => {
