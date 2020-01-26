@@ -1,7 +1,7 @@
 const path = require('path')
 const readline = require('readline')
 
-const interface = readline.createInterface({
+const rlInterface = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 })
@@ -40,8 +40,8 @@ const example = (text, description, color = DEFAULT_COLOR) => {
  * @param {string} message
  * @returns {Promise<string>}
  */
-const askQuestion = (interface, message) => {
-  return new Promise(resolve => interface.question(message, answer => resolve(answer)))
+const askQuestion = (rlInterface, message) => {
+  return new Promise(resolve => rlInterface.question(message, answer => resolve(answer)))
 }
 
 /**
@@ -169,12 +169,12 @@ const prompt = async (questions) => {
   const answers = {}
 
   for (const question of questions) {
-    const answer = await askQuestion(interface, question.message)
+    const answer = await askQuestion(rlInterface, question.message)
 
     answers[question.name] = answer
   }
 
-  interface.close()
+  rlInterface.close()
 
   return answers
 }
