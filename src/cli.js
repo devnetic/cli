@@ -12,6 +12,22 @@ const messages = {
 // const PARAM_REGEX = /-{1,2}([a-z]+)[=|\s]*([a-z0-9\s"'/.]*)/
 
 /**
+ *  Generate an exmple in the usage message
+ *
+ * @param {string} text
+ * @param {string} description
+ * @param {string} color
+ * @returns {object}
+ */
+const example = (text, description, color = DEFAULT_COLOR) => {
+  text = text.replace('$0', path.basename(process.argv[1]))
+
+  messages.examples.push({ text, description, color })
+
+  return cli
+}
+
+/**
  *
  * @param {string} text
  * @param {string} color
@@ -44,27 +60,22 @@ const getBoolean = (value) => {
  * @param {Array<string>} params
  * @returns {object}
  */
-const getParams = (params = process.argv || {}) => {
+const getParams = (params = process.argv.slice(2) || []) => {
   const options = {}
+
+  // Is a better idea to declara the variable outside the loop
   let param
-
-  params = params.slice(2)
   while (params.length > 0) {
-    let item = params.shift()
-    let value
+    param = params.shift()
 
-    if (item.includes('=')) {
-      [item, value] = item.split('=')
-      params.unshift(value)
-    }
+    if (param.includes('=')) {
+      const [name, value] = param.split('=')
 
-    if (item.startsWith('-') || item.startsWith('--')) {
-      const isShourtcut = !item.startsWith('--')
-
-      param = item.slice(isShourtcut ? 1 : 2)
-      options[param] = true
+      setOptionValue(options, name, getValue(value))
     } else {
-      options[param] = getValues(params, getValue(item))
+      if (param.startsWith('-') || param.startsWith('--')) {
+        setOptionValue(options, param, getValues(params))
+      }
     }
   }
 
@@ -97,22 +108,24 @@ const getValue = (value) => {
  * @param {*} initial
  * @returns {array|*}
  */
-const getValues = (params, initial) => {
-  const values = [initial]
+const getValues = (params) => {
+  const values = []
 
+  // Is a better idea to declara the variable outside the loop
+  let param
   while (params.length > 0) {
-    const item = params.shift()
+    param = params.shift()
 
-    if (item.startsWith('-') || item.startsWith('--')) {
-      params.unshift(item)
+    if (param.startsWith('-') || param.startsWith('--')) {
+      params.unshift(param)
 
       break
     }
 
-    values.push(item)
+    values.push(getValue(param))
   }
 
-  return values.length === 1 ? values[0] : values
+  return values.length === 1 ? values[0] : values.length > 0 ? values : true
 }
 
 /**
@@ -129,20 +142,12 @@ const option = (params, description, color = DEFAULT_COLOR) => {
   return cli
 }
 
-/**
- *  Generate an exmple in the usage message
- *
- * @param {string} text
- * @param {string} description
- * @param {string} color
- * @returns {object}
- */
-const example = (text, description, color = DEFAULT_COLOR) => {
-  text = text.replace('$0', path.basename(process.argv[1]))
+const setOptionValue = (options, name, value) => {
+  const isShourtcut = !name.startsWith('--')
 
-  messages.examples.push({ text, description, color })
+  options[name.slice(isShourtcut ? 1 : 2)] = value
 
-  return cli
+  return options
 }
 
 /**
