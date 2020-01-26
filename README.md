@@ -86,3 +86,14 @@ const run = async () => {
 
 run()
 ```
+
+# Changelog
+
+### Version 1.0.0
+- Initial release
+
+### Version 1.0.3
+- Fix bug in float values parsing
+
+### Version 1.1.0
+- Add prompt functionality

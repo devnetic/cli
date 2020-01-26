@@ -18,7 +18,7 @@ const messages = {
 // const PARAM_REGEX = /-{1,2}([a-z]+)[=|\s]*([a-z0-9\s"'/.]*)/
 
 /**
- *  Generate an exmple in the usage message
+ *  Generate an example in the usage message
  *
  * @param {string} text
  * @param {string} description
