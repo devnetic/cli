@@ -8,9 +8,12 @@
 
 A tool for rapidly parse command line arguments or options.
 
-## Usage
+# Usage
 
-Parse cli arguments:
+## Get cli arguments
+
+To get the cli arguments you can to use the `getParams` function; this function 
+return an object with all the params and values given to your Node.js script.
 
 ```javascript
 const { getParams } = require('@devnetic/cli')
@@ -24,7 +27,7 @@ if (params.help || params.h) {
 // execute with node index.js --help or node index.js -h
 ```
 
-Using the `usage` function to create a help for our command line tools:
+## Using the `usage` function to create a help for our command line tools
 
 ```javascript
 const { usage } = require('@devnetic/cli')
@@ -37,7 +40,7 @@ usage('Usage: $0 <command> [options]')
   .show()
 ```
 
-Using the `format` function to custom messages for our command lines tools:
+## Using the `format` function to custom messages for our command lines tools
 
 ```javascript
 const { format } = require('@devnetic/cli')
@@ -50,3 +53,47 @@ console.log(format.bold().italic().red(JSON.stringify(params, null, '  ')))
 console.log(error('Unexpeted Error!'))
 console.log(format.bold().yellow('This is a Warning!'))
 ```
+
+## Prompt questions to the user
+
+With cli package you can ask question to the user in a easy way; the `prompt` 
+function return a `Promise` with the user's answers, so you can use the 
+traditional promise mechanism or to use `async/await`:
+
+```javascript
+const { prompt } = require('@devnetic/cli')
+
+const questions = [{
+  type: 'input',
+  name: 'firstName',
+  message: "What's your firsr name? ",
+}, {
+  type: 'input',
+  name: 'lastname',
+  message: "What's your last name? ",
+}, {
+  type: 'input',
+  name: 'phoneNumber',
+  message: "What's your phone number? ",
+}]
+
+const run = async () => {
+  const answers = await prompt(questions)
+
+  console.log(answers)
+  // { firstName: 'John', lastname: 'Doe', phoneNumber: '123' }
+}
+
+run()
+```
+
+# Changelog
+
+### Version 1.0.0
+- Initial release
+
+### Version 1.0.3
+- Fix bug in float values parsing
+
+### Version 1.1.0
+- Add prompt functionality

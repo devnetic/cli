@@ -1,4 +1,10 @@
 const path = require('path')
+const readline = require('readline')
+
+const rlInterface = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
 
 const { format } = require('./format')
 const { isBoolean, isFloat, isInteger } = require('./utils')
@@ -12,7 +18,7 @@ const messages = {
 // const PARAM_REGEX = /-{1,2}([a-z]+)[=|\s]*([a-z0-9\s"'/.]*)/
 
 /**
- *  Generate an exmple in the usage message
+ *  Generate an example in the usage message
  *
  * @param {string} text
  * @param {string} description
@@ -25,6 +31,17 @@ const example = (text, description, color = DEFAULT_COLOR) => {
   messages.examples.push({ text, description, color })
 
   return cli
+}
+
+/**
+ * Ask a question to the user
+ *
+ * @param {Interface} interface
+ * @param {string} message
+ * @returns {Promise<string>}
+ */
+const askQuestion = (rlInterface, message) => {
+  return new Promise(resolve => rlInterface.question(message, answer => resolve(answer)))
 }
 
 /**
@@ -142,6 +159,26 @@ const option = (params, description, color = DEFAULT_COLOR) => {
   return cli
 }
 
+/**
+ * Show a list of questions to the user and get the answers
+ *
+ * @param {Array<{type: string, name: string, message: string}>} questions
+ * @returns {Array<string>}
+ */
+const prompt = async (questions) => {
+  const answers = {}
+
+  for (const question of questions) {
+    const answer = await askQuestion(rlInterface, question.message)
+
+    answers[question.name] = answer
+  }
+
+  rlInterface.close()
+
+  return answers
+}
+
 const setOptionValue = (options, name, value) => {
   const isShourtcut = !name.startsWith('--')
 
@@ -227,6 +264,7 @@ const cli = {
   example,
   getParams,
   option,
+  prompt,
   show,
   usage
 }
