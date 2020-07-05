@@ -1,4 +1,5 @@
-const { getParams, format, usage } = require('./../index')
+// const { getParams, format, usage } = require('./../index')
+const cli = require('./../lib/index')
 
 // fixed params
 const argv = [
