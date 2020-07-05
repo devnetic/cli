@@ -1,4 +1,5 @@
-const { getParams, format, usage } = require('./../index')
+// const { cli: { getParams, format, usage } } = require('./../lib/')
+const { cli, format } = require('./../lib')
 
 // fixed params
 const argv = [
@@ -20,11 +21,11 @@ const argv = [
   '127.0.0.1'
 ]
 
-const fixed = getParams(argv)
-const params = getParams()
+// const fixed = cli.getParams(argv)
+// const params = cli.getParams()
 
-console.log(format.white(JSON.stringify(fixed, null, '  ')))
-console.log(format.bold().italic().red(JSON.stringify(params, null, '  ')))
+// console.log(format.white(JSON.stringify(fixed, null, '  ')))
+// console.log(format.bold().italic().red(JSON.stringify(fixed, null, '  ')))
 
 // usage('Usage: $0 <command> [options]')
 //   .option(['-f', '--file'], 'Load a file', 'red')
@@ -33,20 +34,20 @@ console.log(format.bold().italic().red(JSON.stringify(params, null, '  ')))
 //   .epilog('copyright 2019', 'green')
 //   .show()
 
-usage('Usage: $0 [options]')
-  .option(['-p', '--port'], '\t\tPort to use [3000]')
-  .option(['-H', '--host'], '\t\tAddress to use [0.0.0.0]')
-  .option(['-s', '--silent'], '\tSuppress log messages from output')
-  .option(['--cors[=headers]'], '\tEnable CORS via the "Access-Control-Allow-Origin" header.')
-  .option([], '\t\t\tOptionally provide CORS headers list separated by commas.')
-  .option(['-S', '--ssl'], '\t\tEnable https.')
-  .option(['-C', ' --cert'], '\t\tPath to ssl cert file (default: cert.pem).')
-  .option(['-K', '--key'], '\t\tPath to ssl key file (default: key.pem).')
-  .option(['-h', '--help'], '\t\tPrint this list and exit.')
-  .epilog(`Server package copyright ${new Date().getFullYear()}`)
-  .show()
+// cli.usage('Usage: $0 [options]')
+//   .option(['-p', '--port'], '\t\tPort to use [3000]')
+//   .option(['-H', '--host'], '\t\tAddress to use [0.0.0.0]')
+//   .option(['-s', '--silent'], '\tSuppress log messages from output')
+//   .option(['--cors[=headers]'], '\tEnable CORS via the "Access-Control-Allow-Origin" header.')
+//   .option([], '\t\t\tOptionally provide CORS headers list separated by commas.')
+//   .option(['-S', '--ssl'], '\t\tEnable https.')
+//   .option(['-C', ' --cert'], '\t\tPath to ssl cert file (default: cert.pem).')
+//   .option(['-K', '--key'], '\t\tPath to ssl key file (default: key.pem).')
+//   .option(['-h', '--help'], '\t\tPrint this list and exit.')
+//   .epilog(`Server package copyright ${new Date().getFullYear()}`)
+//   .show()
 
-const error = format.bold().red
+// const error = format.bold().red
 
-console.log(error('Unexpeted Error!'))
-console.log(format.bold().yellow('This is a Warning!'))
+// console.log(error('Unexpeted Error!'))
+// console.log(format.bold().yellow('This is a Warning!'))
