@@ -1,9 +1,9 @@
-const { prompt } = require('../src/cli')
+const cli = require('./../lib')
 
 const questions = [{
   type: 'input',
   name: 'firstName',
-  message: 'What\'s your firsr name? '
+  message: 'What\'s your first name? '
 }, {
   type: 'input',
   name: 'lastname',
@@ -15,7 +15,7 @@ const questions = [{
 }]
 
 const run = async () => {
-  const answers = await prompt(questions)
+  const answers = await cli.prompt(questions)
 
   console.log(answers)
 }
