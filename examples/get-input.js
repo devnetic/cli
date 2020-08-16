@@ -15,9 +15,11 @@ const questions = [{
 }]
 
 const run = async () => {
-  const answers = await cli.prompt(questions)
+  const answers1 = await cli.prompt(questions)
+  const answers2 = await cli.prompt(questions)
 
-  console.log(answers)
+  console.log(answers1)
+  console.log(answers2)
 }
 
 run()

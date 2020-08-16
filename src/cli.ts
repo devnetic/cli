@@ -1,4 +1,5 @@
 import path from 'path'
+import readline from 'readline'
 
 import { isFloat, isInteger } from '@devnetic/utils'
 
@@ -68,20 +69,16 @@ export const messages: Messages = {
  * @returns {Promise<string>}
  */
 export const askQuestion = async (message: string): Promise<string> => {
-  return await new Promise((resolve) => {
-    const bodyBuffer: Buffer[] = []
+  const readlineInterface = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  })
 
-    // Display the question message
-    console.log(message)
+  return new Promise((resolve) => {
+    readlineInterface.question(message, (answer: string) => {
+      readlineInterface.close()
 
-    // Wait for the user answer
-    process.stdin.on('data', (data: Buffer) => {
-      // If enter key was pressed
-      if (data.toString() === '\r') {
-        resolve(bodyBuffer.join(''))
-      }
-
-      bodyBuffer.push(data)
+      resolve(answer)
     })
   })
 }
@@ -240,6 +237,8 @@ export const option = (params: string[], description: string, color: string = DE
 export const prompt = async (questions: Question[]): Promise<Answers> => {
   const answers: Answers = {}
 
+  process.stdin.resume()
+
   for (const question of questions) {
     const answer = await askQuestion(question.message)
 
@@ -261,60 +260,68 @@ const setParamValue = (params: Params, name: string, value: any): Params => {
  * Show the usage message to the console
  */
 export const show = (): void => {
-  showUsage()
-  showOptions()
-  showExample()
-  showEpilog()
+  console.log(showUsage())
+  console.log(showOptions())
+  console.log(showExample())
+  console.log(showEpilog())
 }
 
 /**
  * Show the epilog message in the console
  *
  */
-const showEpilog = (): void => {
+const showEpilog = (): string => {
   if (messages.epilog === undefined) {
-    return
+    return ''
   }
 
-  console.log(Reflect.get(format, messages.epilog.color)(`\n${messages.epilog.text}`))
+  return Reflect.get(format, messages.epilog.color)(`\n${messages.epilog.text}`)
 }
 
 /**
  * Show the example messages in the console
  *
  */
-const showExample = (): void => {
+const showExample = (): string => {
+  const lines: string[] = []
+
   if (messages.examples.length > 0) {
-    console.log(format.white('\nExamples:\r'))
+    lines.push(format.white('\nExamples:\r'))
   }
 
   messages.examples.forEach((message) => {
-    console.log(Reflect.get(format, message.color)(`  ${message.text}  ${message.description}`))
+    lines.push(Reflect.get(format, message.color)(`  ${message.text}  ${message.description}`))
   })
+
+  return lines.join('')
 }
 
 /**
  * Show the option messages in the console
  *
  */
-const showOptions = (): void => {
+const showOptions = (): string => {
+  const lines: string[] = []
+
   if (messages.options.length > 0) {
-    console.log(format.white('\nOptions:\r'))
+    lines.push(format.white('\nOptions:\r'))
 
     messages.options.forEach((message) => {
-      console.log(Reflect.get(format, message.color)(`  ${message.params.join(', ')}  ${message.description}`))
+      lines.push(Reflect.get(format, message.color)(`  ${message.params.join(', ')}  ${message.description}`))
     })
   }
+
+  return lines.join('')
 }
 
 /**
  * Show the usage message in the console
  *
  */
-const showUsage = (): void => {
+const showUsage = (): string => {
   const usage: string = `${format.white('\r')}${Reflect.get(format, messages.usage.color)(`\r${messages.usage.text}`) as string}`
 
-  console.log(usage)
+  return usage
 }
 
 /**

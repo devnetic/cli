@@ -1,9 +1,6 @@
-// const readline = require('readline')
-
 const test = require('ava')
-// const sinon = require('sinon')
+const sinon = require('sinon')
 
-// const { cli } = require('../lib')
 const cli = require('../lib')
 
 test('should returns the correct params', t => {
@@ -36,6 +33,63 @@ test('should returns the correct params', t => {
   }
 
   t.deepEqual(cli.getParams(argv), expected)
+})
+
+test('should generate the correct usage', t => {
+  cli.usage('Usage: $0 <command> [options]')
+  // .option(['-f', '--file'], 'Load a file', 'red')
+  // .option(['-h', '--help'], 'Show help', 'blue')
+  // .example('$0 -f foo.js', 'count the lines in the given file')
+  // .epilog('copyright 2019', 'green')
+  // .show()
+
+  t.is(cli.messages.usage.text, 'Usage: subprocess.js <command> [options]')
+  t.is(cli.messages.usage.color, 'white')
+})
+
+test('should generate the correct option', t => {
+  const expected = [{
+    color: 'red',
+    description: 'Load a file',
+    params: ['-f', '--file']
+  }, {
+    color: 'blue',
+    description: 'Show help',
+    params: ['-h', '--help']
+  }]
+
+  cli.option(['-f', '--file'], 'Load a file', 'red')
+    .option(['-h', '--help'], 'Show help', 'blue')
+  // .example('$0 -f foo.js', 'count the lines in the given file')
+  // .epilog('copyright 2019', 'green')
+  // .show()
+
+  t.deepEqual(cli.messages.options, expected)
+})
+
+test('should generate the example option', t => {
+  const expected = [{
+    color: 'white',
+    description: 'count the lines in the given file',
+    text: 'subprocess.js -f foo.js'
+  }]
+
+  cli.example('$0 -f foo.js', 'count the lines in the given file')
+  // .show()
+
+  t.deepEqual(cli.messages.examples, expected)
+})
+
+test('should generate the epilog option', t => {
+  const expected = {
+    color: 'green',
+    text: 'copyright 2019'
+  }
+
+  cli.epilog('copyright 2019', 'green')
+  // .show()
+
+  t.deepEqual(cli.messages.epilog, expected)
 })
 
 test('should returns the correct input', async t => {
@@ -75,61 +129,4 @@ test('should returns the correct input', async t => {
   console.log('answers: %o', answers)
 
   t.deepEqual(answers, expected)
-})
-
-test('should display the correct usage', t => {
-  cli.usage('Usage: $0 <command> [options]')
-    // .option(['-f', '--file'], 'Load a file', 'red')
-    // .option(['-h', '--help'], 'Show help', 'blue')
-    // .example('$0 -f foo.js', 'count the lines in the given file')
-    // .epilog('copyright 2019', 'green')
-    .show()
-
-  t.is(cli.messages.usage.text, 'Usage: subprocess.js <command> [options]')
-  t.is(cli.messages.usage.color, 'white')
-})
-
-test('should display the correct option', t => {
-  const expected = [{
-    color: 'red',
-    description: 'Load a file',
-    params: ['-f', '--file']
-  }, {
-    color: 'blue',
-    description: 'Show help',
-    params: ['-h', '--help']
-  }]
-
-  cli.option(['-f', '--file'], 'Load a file', 'red')
-    .option(['-h', '--help'], 'Show help', 'blue')
-    // .example('$0 -f foo.js', 'count the lines in the given file')
-    // .epilog('copyright 2019', 'green')
-    .show()
-
-  t.deepEqual(cli.messages.options, expected)
-})
-
-test('should display the example option', t => {
-  const expected = [{
-    color: 'white',
-    description: 'count the lines in the given file',
-    text: 'subprocess.js -f foo.js'
-  }]
-
-  cli.example('$0 -f foo.js', 'count the lines in the given file')
-    .show()
-
-  t.deepEqual(cli.messages.examples, expected)
-})
-
-test('should display the epilog option', t => {
-  const expected = {
-    color: 'green',
-    text: 'copyright 2019'
-  }
-
-  cli.epilog('copyright 2019', 'green')
-    .show()
-
-  t.deepEqual(cli.messages.epilog, expected)
 })
