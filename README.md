@@ -6,7 +6,7 @@
 ![GitHub issues](https://img.shields.io/github/issues-raw/devnetic/cli)
 ![GitHub](https://img.shields.io/github/license/devnetic/cli)
 
-A tool for rapidly parse command line arguments or options.
+A tool for rapidly parse command line arguments and create command line applications.
 
 # Usage
 
@@ -86,14 +86,3 @@ const run = async () => {
 
 run()
 ```
-
-# Changelog
-
-### Version 1.0.0
-- Initial release
-
-### Version 1.0.3
-- Fix bug in float values parsing
-
-### Version 1.1.0
-- Add prompt functionality
