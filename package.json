@@ -31,6 +31,11 @@
       "examples"
     ]
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "keywords": [
     "cli",
     "command line",
@@ -40,7 +45,8 @@
     "args",
     "console",
     "argsparse",
-    "optparse"
+    "optparse",
+    "prompt"
   ],
   "files": [
     "src/**/*"
@@ -58,6 +64,7 @@
   "devDependencies": {
     "@commitlint/cli": "^9.0.1",
     "@commitlint/config-conventional": "^9.0.1",
+    "@commitlint/format": "^9.1.2",
     "@types/node": "^14.0.14",
     "ava": "^3.9.0",
     "husky": "^4.2.5",

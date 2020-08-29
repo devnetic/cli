@@ -74,7 +74,7 @@ export const askQuestion = async (message: string): Promise<string> => {
     output: process.stdout
   })
 
-  return new Promise((resolve) => {
+  return await new Promise((resolve) => {
     readlineInterface.question(message, (answer: string) => {
       readlineInterface.close()
 
@@ -311,7 +311,7 @@ const showOptions = (): string => {
     })
   }
 
-  return lines.join('')
+  return lines.join('\r\n')
 }
 
 /**

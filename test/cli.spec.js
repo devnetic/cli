@@ -1,5 +1,4 @@
 const test = require('ava')
-const sinon = require('sinon')
 
 const cli = require('../lib')
 
@@ -37,11 +36,6 @@ test('should returns the correct params', t => {
 
 test('should generate the correct usage', t => {
   cli.usage('Usage: $0 <command> [options]')
-  // .option(['-f', '--file'], 'Load a file', 'red')
-  // .option(['-h', '--help'], 'Show help', 'blue')
-  // .example('$0 -f foo.js', 'count the lines in the given file')
-  // .epilog('copyright 2019', 'green')
-  // .show()
 
   t.is(cli.messages.usage.text, 'Usage: subprocess.js <command> [options]')
   t.is(cli.messages.usage.color, 'white')
@@ -60,9 +54,6 @@ test('should generate the correct option', t => {
 
   cli.option(['-f', '--file'], 'Load a file', 'red')
     .option(['-h', '--help'], 'Show help', 'blue')
-  // .example('$0 -f foo.js', 'count the lines in the given file')
-  // .epilog('copyright 2019', 'green')
-  // .show()
 
   t.deepEqual(cli.messages.options, expected)
 })
@@ -75,7 +66,6 @@ test('should generate the example option', t => {
   }]
 
   cli.example('$0 -f foo.js', 'count the lines in the given file')
-  // .show()
 
   t.deepEqual(cli.messages.examples, expected)
 })
@@ -87,7 +77,19 @@ test('should generate the epilog option', t => {
   }
 
   cli.epilog('copyright 2019', 'green')
-  // .show()
+    .show()
+
+  t.deepEqual(cli.messages.epilog, expected)
+})
+
+test('should generate empty epilog option', t => {
+  const expected = {
+    color: 'white',
+    text: undefined
+  }
+
+  cli.epilog()
+    .show()
 
   t.deepEqual(cli.messages.epilog, expected)
 })
