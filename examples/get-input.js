@@ -1,9 +1,9 @@
-const { prompt } = require('../src/cli')
+const cli = require('./../lib')
 
 const questions = [{
   type: 'input',
   name: 'firstName',
-  message: 'What\'s your firsr name? '
+  message: 'What\'s your first name? '
 }, {
   type: 'input',
   name: 'lastname',
@@ -15,9 +15,11 @@ const questions = [{
 }]
 
 const run = async () => {
-  const answers = await prompt(questions)
+  const answers1 = await cli.prompt(questions)
+  const answers2 = await cli.prompt(questions)
 
-  console.log(answers)
+  console.log(answers1)
+  console.log(answers2)
 }
 
 run()
