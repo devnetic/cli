@@ -1,9 +1,9 @@
 {
   "name": "@devnetic/cli",
-  "version": "2.0.0",
+  "version": "1.2.0",
   "description": "A tool for rapidly parse command line arguments or options",
-  "main": "index.js",
-  "unpkg": "index.js",
+  "main": "lib/index.js",
+  "unpkg": "lib/index.js",
   "scripts": {
     "build": "npm run clean && tsc",
     "build:watch": "npm run build -- -w",
@@ -49,7 +49,7 @@
     "prompt"
   ],
   "files": [
-    "src/**/*"
+    "lib/**/*"
   ],
   "repository": {
     "type": "git",
