@@ -40,14 +40,14 @@ interface Question {
 }
 
 interface Cli {
-  askQuestion(message: string): Promise<string>
-  epilog(text: string, color?: string): Cli
-  example(text: string, description: string, color?: string): Cli
-  getParams(params?: string[]): Record<string, string>
-  option(params: string[], description: string, color?: string): Cli
-  prompt(questions: Question[]): Promise<Answers>
-  show(): void
-  usage(text?: string, color?: string): Cli
+  askQuestion: (message: string) => Promise<string>
+  epilog: (text: string, color?: string) => Cli
+  example: (text: string, description: string, color?: string) => Cli
+  getParams: (params?: string[]) => Record<string, string>
+  option: (params: string[], description: string, color?: string) => Cli
+  prompt: (questions: Question[]) => Promise<Answers>
+  show: () => void
+  usage: (text?: string, color?: string) => Cli
 }
 
 type Params = Record<string, string>

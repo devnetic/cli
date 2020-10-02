@@ -1,8 +1,9 @@
 {
   "name": "@devnetic/cli",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A tool for rapidly parse command line arguments or options",
   "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
   "unpkg": "lib/index.js",
   "scripts": {
     "build": "npm run clean && tsc",
@@ -62,17 +63,16 @@
   },
   "homepage": "https://github.com/devnetic/cli#readme",
   "devDependencies": {
-    "@commitlint/cli": "^9.0.1",
-    "@commitlint/config-conventional": "^9.0.1",
-    "@commitlint/format": "^9.1.2",
-    "@types/node": "^14.0.14",
-    "ava": "^3.9.0",
-    "husky": "^4.2.5",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@commitlint/format": "^11.0.0",
+    "@types/node": "^14.11.2",
+    "ava": "^3.13.0",
+    "husky": "^4.3.0",
     "nyc": "^15.1.0",
-    "sinon": "^9.0.2",
-    "standard-version": "^8.0.0",
-    "ts-standard": "^8.0.1",
-    "typescript": "^3.9.6"
+    "standard-version": "^9.0.0",
+    "ts-standard": "^9.0.0",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
     "@devnetic/utils": "^1.2.0"
